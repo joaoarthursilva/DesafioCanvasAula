@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
 
     private void UseAbility()
     {
+        _currentChargeForAbility = 0;
         Instantiate(abilityBullet,transform.position, Quaternion.identity);
     }
     private bool CanShoot()
