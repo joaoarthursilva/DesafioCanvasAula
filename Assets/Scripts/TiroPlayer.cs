@@ -10,9 +10,10 @@ public class TiroPlayer : MonoBehaviour
     private Transform _target;
     private Vector2 _moveDirection;
     private int _damage;
+    [SerializeField] private bool isAbility;
     private void Start()
     {
-        _damage = Random.Range(1, 6);
+        _damage = isAbility ? Random.Range(5, 11) : Random.Range(1, 6);
         _rb = GetComponent<Rigidbody2D>();
         _target = GameObject.FindWithTag("Enemy").transform;
         _moveDirection = (_target.position - transform.position).normalized * moveSpeed;

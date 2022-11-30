@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("UI Variables")] [SerializeField]
     private Slider healthSlider;
+    [SerializeField] private Slider abilitySlider;
     [Header("Health Variables")] [SerializeField]
     private int startingHealth = 10;
     private float _currentHealth;
@@ -24,11 +25,16 @@ public class PlayerController : MonoBehaviour
     private int ammoAmount = 30;
     private int _currentAmmoAmount;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject abilityBullet;
     [SerializeField] private Text ammoAmountText;
-    
-    
+
+    [Header("Ability Variables")] [SerializeField]
+    private int chargeNeededForAbility;
+
+    private float _currentChargeForAbility;
     private void Start()
     {
+        _currentChargeForAbility = 0;
         _currentHealth = startingHealth;
         _currentAmmoAmount = ammoAmount;
         _rb = gameObject.GetComponent<Rigidbody2D>();
@@ -44,13 +50,18 @@ public class PlayerController : MonoBehaviour
         {
             _rb.AddForce(new Vector2(0, _jumpForce));
         }
-
+        if (CanUseAbility() )
+        {
+            UseAbility();
+            //use ability
+        }
         ammoAmountText.text = $"{_currentAmmoAmount}";
         if (CanShoot())
         {
             Shoot();
         }
 
+        abilitySlider.value = _currentChargeForAbility / chargeNeededForAbility;
         healthSlider.value = _currentHealth / startingHealth;
     }
 
@@ -71,12 +82,23 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private bool CanUseAbility()
+    {
+        var a = _currentChargeForAbility >= chargeNeededForAbility && Input.GetKeyDown(KeyCode.E);
+        return a;
+    }
+
+    private void UseAbility()
+    {
+        Instantiate(abilityBullet,transform.position, Quaternion.identity);
+    }
     private bool CanShoot()
     {
         return _currentAmmoAmount > 0 && Input.GetButtonDown("Fire1");
     }
     private void Shoot()
     {
+        _currentChargeForAbility++;
         _currentAmmoAmount--;
         Instantiate(bullet,transform.position, Quaternion.identity);
     }
