@@ -5,7 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("UI Variables")] [SerializeField]
     private Slider healthSlider;
-    [SerializeField] private Slider abilitySlider;
+    [SerializeField] private Image abilityRadial;
+
     [Header("Health Variables")] [SerializeField]
     private int startingHealth = 10;
     private float _currentHealth;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private int chargeNeededForAbility;
 
     private float _currentChargeForAbility;
+    
     private void Start()
     {
         _currentChargeForAbility = 0;
@@ -61,7 +63,7 @@ public class PlayerController : MonoBehaviour
             Shoot();
         }
 
-        abilitySlider.value = _currentChargeForAbility / chargeNeededForAbility;
+        abilityRadial.fillAmount = _currentChargeForAbility / chargeNeededForAbility;
         healthSlider.value = _currentHealth / startingHealth;
     }
 
