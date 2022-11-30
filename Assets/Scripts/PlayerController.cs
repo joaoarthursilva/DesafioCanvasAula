@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 groundRaycastOffset;
 
     [Header("Shooting Variables")] [SerializeField]
-    private int ammoAmount = 10;
+    private int ammoAmount = 30;
     private int _currentAmmoAmount;
     [SerializeField] private GameObject bullet;
     [SerializeField] private Text ammoAmountText;
@@ -54,7 +51,7 @@ public class PlayerController : MonoBehaviour
             Shoot();
         }
 
-        healthSlider.value = (_currentHealth / 10);
+        healthSlider.value = _currentHealth / startingHealth;
     }
 
     private void FixedUpdate()
@@ -85,7 +82,7 @@ public class PlayerController : MonoBehaviour
     }
     private void TakeDamage()
     {
-        _currentHealth -= 1;
+        _currentHealth--;
     }
 
     private void OnCollisionEnter2D(Collision2D col)

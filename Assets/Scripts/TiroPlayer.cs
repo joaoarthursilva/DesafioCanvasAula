@@ -9,9 +9,10 @@ public class TiroPlayer : MonoBehaviour
     private Rigidbody2D _rb;
     private Transform _target;
     private Vector2 _moveDirection;
-
+    private int _damage;
     private void Start()
     {
+        _damage = Random.Range(1, 6);
         _rb = GetComponent<Rigidbody2D>();
         _target = GameObject.FindWithTag("Enemy").transform;
         _moveDirection = (_target.position - transform.position).normalized * moveSpeed;
@@ -22,5 +23,10 @@ public class TiroPlayer : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Enemy") || col.gameObject.layer == 6)
             Destroy(gameObject);
+    }
+
+    public int GetDamage()
+    {
+        return _damage;
     }
 }
